@@ -1,0 +1,18 @@
+{
+  "name": "Bazaar Flip Finder",
+  "short_name": "Flip Finder",
+  "description": "Live Hypixel Skyblock bazaar flips ranked by estimated profit per hour.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#15131c",
+  "theme_color": "#3b2a4d",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%233b2a4d'/%3E%3Ctext x='96' y='140' font-size='130' text-anchor='middle'%3E%F0%9F%AA%99%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

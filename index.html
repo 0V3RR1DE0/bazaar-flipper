@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#3b2a4d" />
+  <title>Bazaar ⇄ Flip Finder</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🪙</text></svg>" />
+</head>
+<body>
+  <div class="gui">
+    <header class="gui-title">
+      <div class="title-block">
+        <h1>Bazaar <span class="arrows">⇄</span> Flip Finder</h1>
+        <p class="subtitle">Live Hypixel Skyblock flips, ranked by estimated profit/hour</p>
+      </div>
+      <div class="status-block">
+        <div id="status-line" class="status-line">Loading…</div>
+        <button id="refresh-btn" class="mc-btn" title="Refresh now">⟳ Refresh</button>
+      </div>
+    </header>
+
+    <div id="error-banner" class="error-banner hidden"></div>
+
+    <section class="controls" aria-label="Filters and settings">
+      <label class="ctl">
+        <span>Flip type</span>
+        <select id="mode">
+          <option value="bazaar">Bazaar (order flip)</option>
+          <option value="npc">NPC (sell to NPC)</option>
+          <option value="craft">Craft (enchant ladder)</option>
+        </select>
+      </label>
+      <label class="ctl">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="item name…" autocomplete="off" />
+      </label>
+      <label class="ctl">
+        <span>Min weekly volume</span>
+        <input id="min-volume" type="number" min="0" step="1000" />
+      </label>
+      <label class="ctl">
+        <span>Bazaar Flipper perk</span>
+        <select id="tax-perk">
+          <option value="none">None — 1.25% tax</option>
+          <option value="t1">Tier I — 1.125% tax</option>
+          <option value="t2">Tier II — 1.0% tax</option>
+          <option value="custom">Custom</option>
+        </select>
+      </label>
+      <label class="ctl">
+        <span>Tax %</span>
+        <input id="tax" type="number" min="0" max="100" step="0.025" />
+      </label>
+      <label class="ctl">
+        <span>Your volume share %</span>
+        <input id="share" type="number" min="0" max="100" step="1" />
+      </label>
+      <label class="ctl">
+        <span>Budget (coins)</span>
+        <input id="budget" type="number" min="0" step="100000" placeholder="0 = ignore" />
+      </label>
+      <label class="ctl">
+        <span>Alert profit/hr ≥</span>
+        <input id="alert-threshold" type="number" min="0" step="100000" placeholder="0 = off" />
+      </label>
+      <label class="ctl">
+        <span>Show top</span>
+        <input id="top-n" type="number" min="1" max="1000" step="10" />
+      </label>
+      <label class="ctl checkbox">
+        <input id="auto-refresh" type="checkbox" />
+        <span>Auto-refresh</span>
+      </label>
+      <label class="ctl checkbox">
+        <input id="only-watch" type="checkbox" />
+        <span>★ Watchlist only</span>
+      </label>
+      <div class="ctl-buttons">
+        <button id="csv-btn" class="mc-btn" title="Export current table to CSV">⤓ CSV</button>
+        <button id="reset-btn" class="mc-btn" title="Reset settings to defaults">Reset</button>
+      </div>
+    </section>
+
+    <main>
+      <div class="table-wrap">
+        <table id="flip-table">
+          <thead>
+            <tr>
+              <th class="left star-head">★</th>
+              <th class="left">Item</th>
+              <th data-sort="buyOrderPrice">Buy order</th>
+              <th data-sort="sellOfferPrice">Sell offer</th>
+              <th data-sort="marginPerUnit">Margin/unit</th>
+              <th data-sort="marginPct">Margin %</th>
+              <th data-sort="depth">Depth</th>
+              <th data-sort="limitingWeekly">Wk vol</th>
+              <th data-sort="profitPerHour" class="active">Profit/hr ▼</th>
+              <th data-sort="budgetProfit">Profit (budget)</th>
+              <th data-sort="riskScore">Risk</th>
+              <th class="left">Trend</th>
+            </tr>
+          </thead>
+          <tbody id="flip-body">
+            <tr><td colspan="12" class="empty">Loading live bazaar data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="result-count" class="result-count"></p>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Data: <a href="https://api.hypixel.net/v2/skyblock/bazaar" target="_blank" rel="noopener">Hypixel Bazaar API</a>
+        (public, ~60s updates). Profit/hr &amp; budget figures are estimates scaled by your volume-share
+        assumption — tune the controls. Risk flags are heuristics; always sanity-check a flip in-game.
+        Not affiliated with Hypixel.
+      </p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="recipes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+/* Minecraft font (Craftron Gaming "Minecraft Regular", self-hosted for offline use) */
+@font-face {
+  font-family: "Minecraft";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/minecraft.woff2") format("woff2"), url("fonts/minecraft.woff") format("woff");
+}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* Minecraft GUI palette */
+  --gui-gray: #c6c6c6;
+  --gui-gray-light: #ffffff;
+  --gui-gray-dark: #555555;
+  --gui-gray-darker: #373737;
+  --slot-bg: #2b2b33;
+  --slot-bg-alt: #32323c;
+  --slot-border: #1a1a20;
+  /* Backdrop (blurred-inventory vibe) */
+  --backdrop-a: #2a2236;
+  --backdrop-b: #15131c;
+  /* Minecraft text colors */
+  --mc-white: #f4f4f4;
+  --mc-gray: #aaaaaa;
+  --mc-dgray: #404040;
+  --mc-green: #55ff55;
+  --mc-dgreen: #3aa83a;
+  --mc-red: #ff5555;
+  --mc-yellow: #ffff55;
+  --mc-gold: #ffaa00;
+  --mc-aqua: #55ffff;
+  --mc-coin: #ffd75f;
+  /* subtle shadow keeps the game-y depth without smearing small text */
+  --shadow-px: 1px 1px 0 rgba(0, 0, 0, 0.45);
+  --title-font: "Minecraft", "Inter", system-ui, sans-serif;
+  --ui-font: "Minecraft", "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px;
+  min-height: 100vh;
+  color: var(--mc-white);
+  font-family: var(--ui-font);
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: 0.2px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(120, 80, 170, 0.25), transparent 60%),
+    radial-gradient(circle at 80% 90%, rgba(60, 120, 170, 0.2), transparent 60%),
+    linear-gradient(160deg, var(--backdrop-a), var(--backdrop-b));
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--mc-aqua); text-shadow: var(--shadow-px); }
+
+/* ---- The chest-GUI frame ---- */
+.gui {
+  max-width: 1280px;
+  margin: 0 auto;
+  background: var(--gui-gray);
+  padding: 6px;
+  box-shadow:
+    inset 3px 3px 0 var(--gui-gray-light),
+    inset -3px -3px 0 var(--gui-gray-dark),
+    0 0 0 3px #000,
+    0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Title bar ---- */
+.gui-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px 12px;
+}
+.gui-title h1 { margin: 0; font-family: var(--title-font); font-size: 26px; color: var(--mc-dgray); letter-spacing: 1px; }
+.gui-title .arrows { color: #2e7d32; }
+.subtitle { margin: 2px 0 0; color: #5a5a5a; font-size: 16px; }
+.status-block { display: flex; align-items: center; gap: 12px; }
+.status-line { color: var(--mc-dgray); font-size: 15px; text-align: right; min-width: 190px; }
+.status-line .ok { color: #2e7d32; }
+.status-line .countdown { color: #1565c0; }
+
+/* ---- Minecraft beveled buttons ---- */
+.mc-btn {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--mc-white);
+  text-shadow: var(--shadow-px);
+  background: #8a8a8a;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 0 #c6c6c6, inset -2px -2px 0 #4f4f4f;
+}
+.mc-btn:hover { background: #9aa4b8; box-shadow: inset 2px 2px 0 #d6dcea, inset -2px -2px 0 #5a6072; color: var(--mc-yellow); }
+.mc-btn:active { box-shadow: inset -2px -2px 0 #c6c6c6, inset 2px 2px 0 #4f4f4f; }
+.mc-btn.spinning { opacity: 0.6; pointer-events: none; }
+
+/* ---- Error banner ---- */
+.error-banner {
+  margin: 0 14px 10px;
+  padding: 10px 14px;
+  background: #5a1f1f;
+  color: #ffb4b4;
+  font-size: 15px;
+  text-shadow: var(--shadow-px);
+  box-shadow: inset 2px 2px 0 #7a3030, inset -2px -2px 0 #3a1212;
+}
+.hidden { display: none; }
+
+/* ---- Controls panel ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 14px;
+  padding: 12px 14px 16px;
+}
+.ctl { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--mc-dgray); }
+.ctl span { padding-left: 2px; }
+.ctl input[type="search"],
+.ctl input[type="number"],
+.ctl select {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--mc-white);
+  text-shadow: var(--shadow-px);
+  background: var(--slot-bg);
+  border: none;
+  padding: 7px 9px;
+  width: 160px;
+  box-shadow: inset 2px 2px 0 var(--slot-border), inset -2px -2px 0 #45454f;
+}
+.ctl input:focus, .ctl select:focus { outline: none; box-shadow: inset 2px 2px 0 var(--slot-border), inset -2px -2px 0 #45454f, 0 0 0 2px var(--mc-yellow); }
+.ctl select option { background: #2b2b33; color: var(--mc-white); }
+.ctl.checkbox { flex-direction: row; align-items: center; gap: 8px; font-size: 15px; padding-bottom: 8px; }
+.ctl.checkbox input { width: 18px; height: 18px; accent-color: #2e7d32; }
+.ctl-buttons { display: flex; gap: 10px; padding-bottom: 1px; }
+
+/* ---- The inventory / slot area (table) ---- */
+main { padding: 4px 14px 14px; }
+.table-wrap {
+  overflow-x: auto;
+  background: #1f1f26;
+  padding: 4px;
+  box-shadow: inset 3px 3px 0 var(--gui-gray-dark), inset -3px -3px 0 var(--gui-gray-light);
+}
+table { width: 100%; border-collapse: collapse; min-width: 1040px; }
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #3a3a44;
+  color: var(--mc-gold);
+  text-shadow: var(--shadow-px);
+  text-align: right;
+  padding: 11px 12px;
+  font-size: 15px;
+  font-weight: normal;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  box-shadow: inset 0 -2px 0 #1a1a20;
+}
+thead th.left { text-align: left; }
+thead th.star-head { cursor: default; color: var(--mc-gold); text-align: center; }
+thead th:hover { color: var(--mc-yellow); }
+thead th.active { color: var(--mc-yellow); }
+
+tbody td {
+  text-align: right;
+  padding: 9px 12px;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--slot-border);
+}
+tbody tr { background: var(--slot-bg); }
+tbody tr:nth-child(even) { background: var(--slot-bg-alt); }
+tbody tr:hover { background: #3c3c48; }
+tbody td.left { text-align: left; }
+
+/* coins-ish gold for prices, green/red for spread, bright profit */
+tbody td:nth-child(3), tbody td:nth-child(4) { color: var(--mc-coin); }
+.pos { color: var(--mc-green); }
+.neg { color: var(--mc-red); }
+.muted { color: var(--mc-gray); }
+.profit { color: var(--mc-green); font-size: 17px; }
+
+.item-name {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--mc-aqua);
+  text-shadow: var(--shadow-px);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.item-name:hover { color: var(--mc-yellow); text-decoration: underline; }
+.item-sub { color: #8a8a96; font-size: 12px; }
+.exit-npc {
+  font-size: 11px;
+  color: #1c1c22;
+  background: var(--mc-gold);
+  padding: 1px 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.star-cell { text-align: center; }
+.star {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6f6f7a;
+  cursor: pointer;
+  text-shadow: var(--shadow-px);
+  line-height: 1;
+}
+.star.on { color: var(--mc-gold); }
+.star:hover { color: var(--mc-yellow); }
+
+/* Risk lore badges */
+.risk {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 14px;
+  text-shadow: var(--shadow-px);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.15), inset -1px -1px 0 rgba(0, 0, 0, 0.4);
+}
+.risk-safe { color: var(--mc-green); }
+.risk-caution { color: var(--mc-gold); }
+.risk-risky { color: var(--mc-red); }
+
+.spark-cell { text-align: left; }
+.spark { vertical-align: middle; }
+.spark-empty { color: #6f6f7a; }
+
+.empty { text-align: center !important; color: var(--mc-gray); padding: 36px !important; }
+.result-count { color: var(--mc-dgray); font-size: 14px; margin: 10px 4px 0; }
+
+.footer { padding: 4px 14px 12px; color: #5a5a5a; font-size: 14px; }
+.footer p { max-width: 900px; margin: 6px 0; }
+
+/* ---- Toast (item-slot popup) ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: #1f1f26;
+  color: var(--mc-yellow);
+  font-size: 16px;
+  text-shadow: var(--shadow-px);
+  padding: 12px 18px;
+  white-space: pre-line;
+  box-shadow: inset 2px 2px 0 #45454f, inset -2px -2px 0 var(--slot-border), 0 6px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---- Scrollbars to match ---- */
+.table-wrap::-webkit-scrollbar { height: 14px; }
+.table-wrap::-webkit-scrollbar-track { background: #15151a; }
+.table-wrap::-webkit-scrollbar-thumb { background: #5a5a66; box-shadow: inset 1px 1px 0 #7a7a88, inset -1px -1px 0 #303038; }
+
+@media (max-width: 640px) {
+  body { padding: 8px; }
+  .gui-title h1 { font-size: 22px; }
+  .ctl input[type="search"], .ctl input[type="number"], .ctl select { width: 130px; }
+}
